@@ -1,0 +1,31 @@
+# Given an array of integers y, print all the items of even position in the array.
+
+.data 
+#click:   .word 0 # <--------------- set to 0 to print numbers in EVEN position 
+list:	  .word 3, 5, 7, 9, 8
+.text
+
+addi s1, zero, 1
+lui s0, 0x10010
+addi t0, zero, 0	# <---------------- set "t0" to 0 to print numbers in EVEN position
+#lw t0, 0(s0)		# click in t0
+#addi s0, s0, 4
+ciclo:
+    lw t1, 0(s0)
+    beq t1, zero, fin
+    beq t0, zero, printNumber
+    beq t0, s1, dim
+dim:
+    addi t0, zero, 0
+    addi s0, s0, 4
+    j ciclo
+fin:
+    addi a7, zero, 10
+    ecall
+printNumber:
+    add a0, zero, t1
+    addi a7, zero, 1
+    ecall
+    addi s0, s0, 4
+    addi t0, t0, 1
+    j ciclo

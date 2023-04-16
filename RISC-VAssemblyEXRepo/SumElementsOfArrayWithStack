@@ -1,0 +1,42 @@
+# Write an iterative function to sum up all the values of an array of integers allocating 
+# temporarily memory space on the stack.
+
+.data
+length: .word 5
+list:   .word 5, 6, 7, 2, 2
+
+.text
+
+addi a0, zero, 0
+addi s0, zero, 0
+addi t0, zero, 0
+addi t1, zero, 0
+
+lui s0, 0x10010
+
+lw t0, 0(s0)		# list length in t0
+
+ciclo:
+    beq t0, zero, somma
+    addi s0, s0, 4
+    addi sp, sp, -4
+    lw t1, 0(s0)
+    sw t1, 0(sp)
+    addi t0, t0, -1
+    j ciclo
+    
+somma:
+    lw t1, 0(sp)
+    beq t1, zero, fine
+    add a0, a0, t1
+    addi sp, sp, 4
+    j somma
+    
+fine:
+    addi a7, zero, 1
+    ecall
+    addi a7, zero, 10
+    ecall   
+    
+    
+    
